@@ -7,6 +7,9 @@ export const redis =
   globalForRedis.redis ??
   new Redis(process.env.REDIS_URL ?? "redis://localhost:6379", {
     maxRetriesPerRequest: 3,
+    // Connect on first command rather than at construction, so importing this
+    // module (e.g. during a build) never opens a socket.
+    lazyConnect: true,
   });
 
 if (process.env.NODE_ENV !== "production") {

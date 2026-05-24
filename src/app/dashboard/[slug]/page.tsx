@@ -57,7 +57,7 @@ export default async function LinkAnalytics({
         />
       </div>
 
-      <section className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+      <section className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5 shadow-sm shadow-black/10">
         <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">
           Clicks over time
         </h3>
@@ -108,7 +108,7 @@ export default async function LinkAnalytics({
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
+    <div className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-4">
       <p className="text-xs uppercase tracking-wider text-neutral-500">{label}</p>
       <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
     </div>

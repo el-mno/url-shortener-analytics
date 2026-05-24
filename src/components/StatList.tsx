@@ -22,7 +22,7 @@ export function StatList({
   const max = Math.max(1, ...items.map((item) => item.count));
 
   return (
-    <section className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+    <section className="rounded-2xl border border-neutral-800 bg-neutral-900/40 p-5 shadow-sm shadow-black/10">
       <h3 className="mb-4 text-xs font-semibold uppercase tracking-wider text-neutral-400">{title}</h3>
       {items.length === 0 ? (
         <p className="text-sm text-neutral-600">{emptyLabel}</p>

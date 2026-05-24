@@ -28,14 +28,14 @@ export default async function Dashboard() {
       </div>
 
       {links.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-neutral-800 px-6 py-16 text-center">
+        <div className="rounded-2xl border border-dashed border-neutral-800 px-6 py-16 text-center">
           <p className="text-neutral-400">No links yet.</p>
           <Link href="/" className="mt-2 inline-block text-sm text-emerald-400 hover:text-emerald-300">
             Create your first short link →
           </Link>
         </div>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-neutral-800">
+        <div className="overflow-x-auto rounded-2xl border border-neutral-800 shadow-sm shadow-black/10">
           <table className="w-full text-sm">
             <thead className="border-b border-neutral-800 text-left text-xs uppercase tracking-wider text-neutral-500">
               <tr>
