@@ -154,6 +154,9 @@ POST /api/links
 GET /api/links
 → 200 { "links": [{ slug, targetUrl, createdAt, clickCount }] }
 
+DELETE /api/links/:slug
+→ 204 link and its click events deleted   ·   404 unknown slug
+
 GET /api/stats/:slug
 → 200 { link, totalClicks, byDay[], countries[], referrers[], devices[], browsers[] }
 → 404 unknown slug

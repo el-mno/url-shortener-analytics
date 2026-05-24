@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ClicksChart } from "@/components/ClicksChart";
 import { CopyButton } from "@/components/CopyButton";
+import { DeleteLinkButton } from "@/components/DeleteLinkButton";
 import { StatList } from "@/components/StatList";
 import { countryLabel } from "@/lib/country";
 import { getLinkStats } from "@/lib/stats";
@@ -43,7 +44,10 @@ export default async function LinkAnalytics({
             </a>
             <p className="mt-1 max-w-xl truncate text-sm text-neutral-500">→ {stats.link.targetUrl}</p>
           </div>
-          <CopyButton value={shortUrl} label="Copy link" />
+          <div className="flex items-center gap-2">
+            <CopyButton value={shortUrl} label="Copy link" />
+            <DeleteLinkButton slug={slug} redirectTo="/dashboard" />
+          </div>
         </div>
       </div>
 

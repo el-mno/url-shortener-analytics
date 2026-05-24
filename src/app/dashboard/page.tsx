@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CopyButton } from "@/components/CopyButton";
+import { DeleteLinkButton } from "@/components/DeleteLinkButton";
 import { getLinksWithCounts } from "@/lib/stats";
 
 export const dynamic = "force-dynamic";
@@ -70,8 +71,11 @@ export default async function Dashboard() {
                     <td className="whitespace-nowrap px-4 py-3 text-neutral-500">
                       {dateFormat.format(link.createdAt)}
                     </td>
-                    <td className="px-4 py-3 text-right">
-                      <CopyButton value={shortUrl} />
+                    <td className="px-4 py-3">
+                      <div className="flex items-center justify-end gap-2">
+                        <CopyButton value={shortUrl} />
+                        <DeleteLinkButton slug={link.slug} />
+                      </div>
                     </td>
                   </tr>
                 );
