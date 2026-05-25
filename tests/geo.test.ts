@@ -20,29 +20,29 @@ describe("clientIpFromHeaders", () => {
 });
 
 describe("countryFromIp", () => {
-  it("resolves a known public IP via the offline dataset", () => {
-    expect(countryFromIp("8.8.8.8")).toBe("US");
+  it("resolves a known public IP via the offline dataset", async () => {
+    expect(await countryFromIp("8.8.8.8")).toBe("US");
   });
 
-  it("ignores private and loopback addresses", () => {
-    expect(countryFromIp("127.0.0.1")).toBeNull();
-    expect(countryFromIp("10.1.2.3")).toBeNull();
-    expect(countryFromIp("192.168.1.5")).toBeNull();
-    expect(countryFromIp("172.16.0.1")).toBeNull();
-    expect(countryFromIp("::1")).toBeNull();
-    expect(countryFromIp(null)).toBeNull();
+  it("ignores private and loopback addresses", async () => {
+    expect(await countryFromIp("127.0.0.1")).toBeNull();
+    expect(await countryFromIp("10.1.2.3")).toBeNull();
+    expect(await countryFromIp("192.168.1.5")).toBeNull();
+    expect(await countryFromIp("172.16.0.1")).toBeNull();
+    expect(await countryFromIp("::1")).toBeNull();
+    expect(await countryFromIp(null)).toBeNull();
   });
 });
 
 describe("countryFromHeaders", () => {
-  it("prefers the edge-provided country header", () => {
-    expect(countryFromHeaders(headers({ "x-vercel-ip-country": "de" }))).toBe("DE");
-    expect(countryFromHeaders(headers({ "cf-ipcountry": "gb" }))).toBe("GB");
+  it("prefers the edge-provided country header", async () => {
+    expect(await countryFromHeaders(headers({ "x-vercel-ip-country": "de" }))).toBe("DE");
+    expect(await countryFromHeaders(headers({ "cf-ipcountry": "gb" }))).toBe("GB");
   });
 
-  it("ignores the placeholder XX and falls back to IP lookup", () => {
+  it("ignores the placeholder XX and falls back to IP lookup", async () => {
     expect(
-      countryFromHeaders(headers({ "x-vercel-ip-country": "XX", "x-forwarded-for": "8.8.8.8" })),
+      await countryFromHeaders(headers({ "x-vercel-ip-country": "XX", "x-forwarded-for": "8.8.8.8" })),
     ).toBe("US");
   });
 });

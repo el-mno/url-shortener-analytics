@@ -206,11 +206,29 @@ docker run -p 3000:3000 \
 
 ### Vercel
 
-Deploy the repo to Vercel and point the environment variables at managed
-services — for example **Neon** or **Supabase** for Postgres and **Upstash**
-for Redis (`REDIS_URL` accepts a `rediss://` TLS URL). Country resolution
-automatically prefers the `x-vercel-ip-country` / `cf-ipcountry` edge header
-when present, falling back to the bundled dataset otherwise.
+Vercel auto-detects the Next.js app and gives it a public URL — but it needs a
+managed Postgres and Redis, since those aren't bundled. One-time setup:
+
+1. **Create the data stores** and copy their connection strings:
+   - Postgres — [Neon](https://neon.tech) or [Supabase](https://supabase.com)
+   - Redis — [Upstash](https://upstash.com) (use its `rediss://` TLS URL)
+2. **Import the repo** into Vercel (New Project → pick the repo). No build
+   settings to change.
+3. **Set environment variables** in the project (Settings → Environment
+   Variables):
+   - `DATABASE_URL` — the Postgres connection string
+   - `REDIS_URL` — the Upstash connection string
+   - `NEXT_PUBLIC_BASE_URL` — your deployment origin, e.g. `https://trim.vercel.app`
+4. **Apply the schema** to the production database once, from your machine:
+   ```bash
+   DATABASE_URL="<your-prod-postgres-url>" npm run db:migrate
+   ```
+5. **Deploy.** Pushes to `main` deploy automatically.
+
+Country resolution uses Vercel's `x-vercel-ip-country` header, so the GeoIP
+dataset is **not** shipped to the serverless function — it's excluded from the
+bundle to keep the function small. (Self-hosted/Docker deployments still ship
+the dataset and resolve locally.)
 
 ## Configuration
 

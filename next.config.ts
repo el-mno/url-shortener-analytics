@@ -9,6 +9,12 @@ const nextConfig: NextConfig = {
   // geoip-lite reads binary data files from disk at runtime, so it must stay
   // external to the server bundle instead of being traced/inlined by the compiler.
   serverExternalPackages: ["geoip-lite"],
+  // Keep the ~160 MB GeoIP dataset out of serverless function bundles (e.g. on
+  // Vercel, where the x-vercel-ip-country header is used instead). Self-hosted
+  // and Docker deployments still ship the dataset and resolve locally.
+  outputFileTracingExcludes: {
+    "*": ["node_modules/geoip-lite/data/**"],
+  },
 };
 
 export default nextConfig;

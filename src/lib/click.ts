@@ -5,7 +5,7 @@ import { parseUserAgent } from "./ua";
 
 // Derive the analytics attributes for a single redirect from the request
 // headers. No raw IP address is retained — only the resolved country.
-export function extractClickContext(headers: Headers) {
+export async function extractClickContext(headers: Headers) {
   const referrer = headers.get("referer");
   const userAgent = headers.get("user-agent");
   const { deviceType, browser, os } = parseUserAgent(userAgent);
@@ -13,7 +13,7 @@ export function extractClickContext(headers: Headers) {
   return {
     referrer,
     referrerHost: referrerHostFrom(referrer),
-    country: countryFromHeaders(headers),
+    country: await countryFromHeaders(headers),
     deviceType,
     browser,
     os,
@@ -21,7 +21,8 @@ export function extractClickContext(headers: Headers) {
 }
 
 export async function recordClick(slug: string, headers: Headers): Promise<void> {
-  await db.insert(clicks).values({ slug, ...extractClickContext(headers) });
+  const context = await extractClickContext(headers);
+  await db.insert(clicks).values({ slug, ...context });
 }
 
 function referrerHostFrom(referrer: string | null): string | null {
