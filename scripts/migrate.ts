@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
+import { pgSslConfig } from "../src/lib/pg-ssl";
 
 try {
   process.loadEnvFile(".env");
@@ -13,7 +14,7 @@ async function main() {
     throw new Error("DATABASE_URL is not set");
   }
 
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  const pool = new Pool({ connectionString: process.env.DATABASE_URL, ssl: pgSslConfig() });
   const db = drizzle(pool);
 
   await migrate(db, { migrationsFolder: "./drizzle" });
